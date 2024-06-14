@@ -9,7 +9,7 @@ const app = express();
 //     // res.json(res.status(200))
 // });
 console.log(encodeURIComponent("6dE+Ip6Xg+Qc6n5Pjm9OjErINbxsqtpw"))
-app.get(
+app.post(
   "/indiamart/" + encodeURIComponent("6dE+Ip6Xg+Qc6n5Pjm9OjErINbxsqtpw"),
   (req, res) => {
     res.send("hi");
