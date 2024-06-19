@@ -29,6 +29,7 @@ app.post(
       status: 'Success',
       data: data
     });
+    console.log(data);
   }
 );
 
