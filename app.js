@@ -18,7 +18,7 @@ async function getAccessToken() {
   }
 }
 async function createLead(testdata,accesstoken) {
-  const url = "https://www.zohoapis.in/crm/v2/Leads";
+  const url = "https://www.zohoapis.com/crm/v2/Leads";
   const Company = testdata.RESPONSE.SENDER_COMPANY +"hi";
   const Last_Name = testdata.RESPONSE.SENDER_NAME;
   const Phone = testdata.RESPONSE.SENDER_MOBILE;
