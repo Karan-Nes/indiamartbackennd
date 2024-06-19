@@ -2,9 +2,9 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 
-app.post('/indiamart', (req, res) => {
-    res.send('Indiamart');
-    res.json(res.status(200))
+app.post("/indiamart", (req, res) => {
+  res.send("Indiamart");
+  res.json(res.status(200));
 });
 // const url= encodeURIComponent("6dE+Ip6Xg+Qc6n5Pjm9OjErINbxsqtpw")
 // app.post(
@@ -16,32 +16,33 @@ app.post('/indiamart', (req, res) => {
 //   }
 // );
 // console.log(url)
-const url= encodeURIComponent("6dE-IpuZi-Md4H5BjWRBjErINbxsqtpw")
+const url = encodeURIComponent("6dE-IpuZi-Md4H5BjWRBjErINbxsqtpw");
 
-console.log(url)
+console.log(url);
 
-app.post(
-  "/indiamart/6dE-IpuZieAd7X5OjWVAjErINbxsqtpw",
-  (req, res) => {
-    const data= req.body;
-    console.log(data)
-    console.log(data.body.CODE)
-    try{
-      res.status(data.body.CODE).send({
-        code: data.body.CODE,
-        status: data.body.STATUS,
-        error:e
-      });
-    }catch(e){
-      res.status(data.body.CODE).send({
-        code: data.body.CODE,
-        status: data.body.STATUS,
-        error:e
-      });
-    }
-    
-  }
-);
+app.post("/indiamart/6dE-IpuZieAd7X5OjWVAjErINbxsqtpw", (req, res) => {
+  console.log(req.body);
+  res.status(200).send({
+    code: 200,
+    status: "Success",
+  });
+  // const data= req.body;
+  // console.log(data)
+  // console.log(data.body.CODE)
+  // try{
+  //   res.status(data.body.CODE).send({
+  //     code: data.body.CODE,
+  //     status: data.body.STATUS,
+  //     error:e
+  //   });
+  // }catch(e){
+  //   res.status(data.body.CODE).send({
+  //     code: data.body.CODE,
+  //     status: data.body.STATUS,
+  //     error:e
+  //   });
+  // }
+});
 
 app.get("/", (req, res) => {
   res.send("API Working new");
