@@ -65,8 +65,8 @@ app.post("/indiamart/6dE-IpuZieAd7X5OjWVAjErINbxsqtpw", (req, res) => {
 });
 
 
-const calc=60000*55;
-setInterval(getAccessToken, calc);
+// const calc=60000*55;
+// setInterval(getAccessToken, calc);
 
 app.get("/", (req, res) => {
   res.send("API Working new");
