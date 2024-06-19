@@ -4,32 +4,36 @@ const app = express();
 
 app.post('/indiamart', (req, res) => {
     res.send('Indiamart');
-    // console.log(res)
-    // console.log(req)
-    // res.json(res.status(200))
+    res.json(res.status(200))
 });
-console.log(encodeURIComponent("6dE+Ip6Xg+Qc6n5Pjm9OjErINbxsqtpw"))
-app.post(
-  "/indiamart/" + encodeURIComponent("6dE+Ip6Xg+Qc6n5Pjm9OjErINbxsqtpw"),
-  (req, res) => {
-    res.send("hi");
-    console.log("api hit")
-    res.status(200)
-  }
-);
+// const url= encodeURIComponent("6dE+Ip6Xg+Qc6n5Pjm9OjErINbxsqtpw")
 // app.post(
-//   "/indiamart/6dE+Ip6Xg+Qc6n5Pjm9OjErINbxsqtpw",
+//   url,
 //   (req, res) => {
 //     res.send("hi");
 //     console.log("api hit")
 //     res.status(200)
 //   }
 // );
+// console.log(url)
+const url= encodeURIComponent("6dE-IpuZi-Md4H5BjWRBjErINbxsqtpw")
 
+console.log(url)
 
+app.post(
+  "/indiamart/6dE-IpuZi-Md4H5BjWRBjErINbxsqtpw",
+  (req, res) => {
+    const data= req.body;
+    res.status(200).send({
+      code: 200,
+      status: 'Success',
+      data: data
+    });
+  }
+);
 
 app.get("/", (req, res) => {
-  res.send("API Working");
+  res.send("API Working new");
   res.status(200);
 });
 
