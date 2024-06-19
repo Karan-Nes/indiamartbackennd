@@ -24,12 +24,22 @@ app.post(
   "/indiamart/6dE-IpuZi-Md4H5BjWRBjErINbxsqtpw",
   (req, res) => {
     const data= req.body;
-    res.status(200).send({
-      code: 200,
-      status: 'Success',
-      data: data
-    });
-    console.log(data);
+    console.log(data)
+    console.log(data.body.CODE)
+    try{
+      res.status(data.body.CODE).send({
+        code: data.body.CODE,
+        status: data.body.STATUS,
+        error:e
+      });
+    }catch(e){
+      res.status(data.body.CODE).send({
+        code: data.body.CODE,
+        status: data.body.STATUS,
+        error:e
+      });
+    }
+    
   }
 );
 
