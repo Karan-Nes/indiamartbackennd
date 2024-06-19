@@ -6,7 +6,7 @@ const axios =require('axios')
 app.use(bodyParser.json());
 const url = 'https://accounts.zoho.in/oauth/v2/token?refresh_token=1000.b5b878057607867ffbf6105914f86bc0.708cc6e90106bca43cfa9c3d7bef6972&client_id=1000.ZAFQ18UI8L0BV4FSRM8CRYHC6IMNWV&client_secret=eba8fcef95a0c67e1ab34397e21d7cfa8ebd06bfeb&grant_type=refresh_token';
 
-var accesstoken='1000.9db5418359c84cde0c172254609b1c3d.ba87151f1d6b07f8a2d356f909770a25';
+var accesstoken='1000.6c1781ff52fce9c3c1c49eb47866946c.e1928140b55e95a054c21ab44ff5d8f0';
 
 async function getAccessToken() {
   try {
@@ -17,19 +17,20 @@ async function getAccessToken() {
     console.error('Error:', error.response ? error.response.data : error.message);
   }
 }
-async function createLead(data) {
+async function createLead(testdata,accesstoken) {
   const url = "https://www.zohoapis.in/crm/v2/Leads";
-  const Company = data.RESPONSE.SENDER_COMPANY +"hi";
-  const Last_Name = data.RESPONSE.SENDER_NAME;
-  const Phone = data.RESPONSE.SENDER_MOBILE;
+  const Company = testdata.RESPONSE.SENDER_COMPANY +"hi";
+  const Last_Name = testdata.RESPONSE.SENDER_NAME;
+  const Phone = testdata.RESPONSE.SENDER_MOBILE;
   const newdata = { Company, Last_Name, Phone };
+  console.log(newdata)
   try {
     const response = await axios.post(
       url,
       { data: [newdata] },
       {
         headers: {
-          Authorization: `Zoho-oauthtoken ${accessToken}`,
+          Authorization: `Zoho-oauthtoken ${accesstoken}`,
           "Content-Type": "application/json",
         },
       }
@@ -44,10 +45,12 @@ async function createLead(data) {
   }
 }
 app.post("/indiamart/6dE-IpuZieAd7X5OjWVAjErINbxsqtpw", (req, res) => {
+  // console.log(req.body)
+  const testdata=req.body
   try {
     // console.log(req.body);
-    const data=req.body;
-    createLead(data);
+    console.log(accesstoken)
+    createLead(testdata,accesstoken);
     res.status(200).send({
       code: 200,
       status: "Success",
@@ -62,8 +65,8 @@ app.post("/indiamart/6dE-IpuZieAd7X5OjWVAjErINbxsqtpw", (req, res) => {
 });
 
 
-const calc=60000*55;
-setInterval(getAccessToken, calc);
+// const calc=60000*55;
+// setInterval(getAccessToken, calc);
 
 app.get("/", (req, res) => {
   res.send("API Working new");
