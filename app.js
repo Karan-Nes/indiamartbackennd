@@ -2,49 +2,52 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
-// const status = {
-//   method: "POST",
-//   json: true,
-//   headers: {
-//     "Content-Type": "application/json",
-//   },
-//   url: "http://webhook-endpoint.example-client.io/Client-generated-key",
-//   body: {
-//     CODE: 200,
-//     STATUS: "SUCCESS",
-//     RESPONSE: {
-//       UNIQUE_QUERY_ID: 621654886,
-//       QUERY_TYPE: "B",
-//       QUERY_TIME: "2024-04-10 11:17:14",
-//       SENDER_NAME: "Prabhat",
-//       SENDER_MOBILE: "+91-9999999999",
-//       SENDER_EMAIL: "abcdeprabhat@gmail.com",
-//       SUBJECT: "Requirement for Empty Mineral Water Bottle",
-//       SENDER_COMPANY: "ABC Pvt Ltd.",
-//       SENDER_ADDRESS: "Sec 135, Noida, Uttar Pradesh",
-//       SENDER_CITY: "Noida",
-//       SENDER_STATE: "Uttar Pradesh",
-//       SENDER_PINCODE: "201304",
-//       SENDER_COUNTRY_ISO: "IN",
-//       SENDER_MOBILE_ALT: "+91-8888888888",
-//       SENDER_PHONE: "0120-22222222",
-//       SENDER_PHONE_ALT: "0120-11111111",
-//       SENDER_EMAIL_ALT: "prabhatabcde@gmail.com",
-//       QUERY_PRODUCT_NAME: "Mineral Water Bottle",
-//       QUERY_MESSAGE:
-//         "I want to purchase an Empty Mineral Water Bottle. Kindly send me price and other details.Quantity: 100000 PieceProbable Order Value: Rs. 10 to 20 LakhProbable Requirement Type: Business Use",
-//       QUERY_MCAT_NAME: "Mineral Water Bottle",
-//       CALL_DURATION: "",
-//       RECEIVER_MOBILE: "",
-//     },
-//   },
-//   timeout: 10000,
-// };
+const axios =require('axios')
 app.use(bodyParser.json());
-// console.log(status);
+const url = 'https://accounts.zoho.in/oauth/v2/token?refresh_token=1000.b5b878057607867ffbf6105914f86bc0.708cc6e90106bca43cfa9c3d7bef6972&client_id=1000.ZAFQ18UI8L0BV4FSRM8CRYHC6IMNWV&client_secret=eba8fcef95a0c67e1ab34397e21d7cfa8ebd06bfeb&grant_type=refresh_token';
+
+var accesstoken='1000.9db5418359c84cde0c172254609b1c3d.ba87151f1d6b07f8a2d356f909770a25';
+
+async function getAccessToken() {
+  try {
+    const response = await axios.post(url);
+    accesstoken=response.data.access_token;
+    // console.log('Response:', response.data.access_token);
+  } catch (error) {
+    console.error('Error:', error.response ? error.response.data : error.message);
+  }
+}
+async function createLead(data) {
+  const url = "https://www.zohoapis.in/crm/v2/Leads";
+  const Company = data.RESPONSE.SENDER_COMPANY +"hi";
+  const Last_Name = data.RESPONSE.SENDER_NAME;
+  const Phone = data.RESPONSE.SENDER_MOBILE;
+  const newdata = { Company, Last_Name, Phone };
+  try {
+    const response = await axios.post(
+      url,
+      { data: [newdata] },
+      {
+        headers: {
+          Authorization: `Zoho-oauthtoken ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    console.log("Lead created successfully:", response.data);
+  } catch (error) {
+    console.error(
+      "Error creating lead:",
+      error.response ? error.response.data : error.message
+    );
+  }
+}
 app.post("/indiamart/6dE-IpuZieAd7X5OjWVAjErINbxsqtpw", (req, res) => {
   try {
-    console.log(req.body);
+    // console.log(req.body);
+    const data=req.body;
+    createLead(data);
     res.status(200).send({
       code: 200,
       status: "Success",
@@ -58,11 +61,14 @@ app.post("/indiamart/6dE-IpuZieAd7X5OjWVAjErINbxsqtpw", (req, res) => {
   }
 });
 
+
+const calc=60000*55;
+setInterval(getAccessToken, calc);
+
 app.get("/", (req, res) => {
   res.send("API Working new");
   res.status(200);
 });
-
 app.listen(process.env.PORT, () => {
   console.log(`Server running on http://localhost:${process.env.PORT}`);
 });
