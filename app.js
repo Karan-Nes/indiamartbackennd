@@ -21,7 +21,7 @@ const url= encodeURIComponent("6dE-IpuZi-Md4H5BjWRBjErINbxsqtpw")
 console.log(url)
 
 app.post(
-  "/indiamart/6dE-IpuZi-Md4H5BjWRBjErINbxsqtpw",
+  "/indiamart/6dE-IpuZieAd7X5OjWVAjErINbxsqtpw",
   (req, res) => {
     const data= req.body;
     console.log(data)
